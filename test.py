@@ -1,4 +1,4 @@
-import search
+from search import a_star, dijkstra, dijkstra_queue
 import unittest
 
 test = {'A': {'B': 2, 'C': 5},
@@ -16,7 +16,7 @@ test2 = {'A': {'B': 2},
 
 class TestDijkstra(unittest.TestCase):
     def setUp(self):
-        self.test_function = search.dijkstra
+        self.test_function = dijkstra.search
 
     def test_path_true(self):
         self.assertEqual(self.test_function(test, 'A', 'D'), ['A', 'B', 'D'])
@@ -33,9 +33,9 @@ class TestDijkstra(unittest.TestCase):
 
 class TestDijkstraQueue(TestDijkstra):
     def setUp(self):
-        self.test_function = search.dijkstra_queue
+        self.test_function = dijkstra_queue.search
 
 
 class TestAstar(TestDijkstra):
     def setUp(self):
-        self.test_function = search.a_star
+        self.test_function = a_star.search
