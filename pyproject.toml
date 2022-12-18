@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "search-algorithms"
+version = "0.1.0"
+description = ""
+authors = ["Nyaaa <1457047+Nyaaa@users.noreply.github.com>"]
+readme = "README.md"
+packages = [{include = "search"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+networkx = "^2.8.8"
+matplotlib = "^3.6.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
