@@ -1,5 +1,7 @@
-from search import a_star, dijkstra, dijkstra_queue
+from search import a_star, dijkstra, dijkstra_queue, binary
+from search.errors import PathNotFound, VertexNotFound
 import unittest
+import string
 
 test = {'A': {'B': 2, 'C': 5},
         'B': {'A': 2, 'C': 2, 'D': 4},
@@ -22,13 +24,13 @@ class TestDijkstra(unittest.TestCase):
         self.assertEqual(self.test_function(test, 'A', 'D'), ['A', 'B', 'D'])
 
     def test_illegal_stop(self):
-        self.assertRaises(BaseException, self.test_function, test, 'A', 'N')
+        self.assertRaises(VertexNotFound, self.test_function, test, 'A', 'N')
 
     def test_illegal_start(self):
-        self.assertRaises(BaseException, self.test_function, test, 'N', 'A')
+        self.assertRaises(VertexNotFound, self.test_function, test, 'N', 'A')
 
     def test_no_path(self):
-        self.assertRaises(BaseException, self.test_function, test2, 'A', 'C')
+        self.assertRaises(PathNotFound, self.test_function, test2, 'A', 'C')
 
 
 class TestDijkstraQueue(TestDijkstra):
@@ -39,3 +41,28 @@ class TestDijkstraQueue(TestDijkstra):
 class TestAstar(TestDijkstra):
     def setUp(self):
         self.test_function = a_star.search
+
+
+class TestBinary(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.data = range(-10, 11)
+        cls.strings = list(string.ascii_lowercase)
+
+    def test_negative(self):
+        self.assertEqual(binary.search(self.data, -10), 0)
+
+    def test_positive(self):
+        self.assertEqual(binary.search(self.data, 10), 20)
+
+    def test_zero(self):
+        self.assertEqual(binary.search(self.data, 0), 10)
+
+    def test_str(self):
+        self.assertEqual(binary.search(self.strings, 'a'), 0)
+
+    def test_item_not_in_list(self):
+        self.assertRaises(VertexNotFound, binary.search, self.data, -30)
+        self.assertRaises(VertexNotFound, binary.search, self.data, 30)
+        self.assertRaises(VertexNotFound, binary.search, self.strings, 'Z')
+
